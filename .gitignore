@@ -1,0 +1,8 @@
+# history
+.history
+
+# python
+__pycache__
+
+# venv
+venv
