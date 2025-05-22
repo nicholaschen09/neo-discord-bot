@@ -5,12 +5,11 @@ from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone 
 from groq import Groq 
 
-# Load environment variables
 load_dotenv()
 
 # Initialize Groq client
 groq_client = Groq(
-    api_key=os.getenv('GROQ_API_KEY'), # Get API key from .env
+    api_key=os.getenv('GROQ_API_KEY')
 )
 
 # Initialize bot with intents
