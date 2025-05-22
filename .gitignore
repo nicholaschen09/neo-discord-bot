@@ -9,3 +9,6 @@ venv
 
 # env
 .env
+
+# requirements
+requirements.txt
