@@ -50,8 +50,6 @@ async def on_message(message):
     # Process commands (e.g., !summarize) after storing the message
     await bot.process_commands(message)
 
----
-
 @bot.command(name='summarize')
 async def summarize(ctx):
     """Summarizes unread messages in the current channel using Groq."""
@@ -109,8 +107,6 @@ async def summarize(ctx):
     except Exception as e: # Catching a broad exception for demonstration
         print(f"An error occurred during Groq API call: {e}")
         await ctx.send(f"An error occurred while trying to summarize: {e}")
-
----
 
 @bot.command(name='clear')
 async def clear(ctx):
