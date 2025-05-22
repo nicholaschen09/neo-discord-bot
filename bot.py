@@ -35,7 +35,7 @@ async def on_ready():
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": "Hello!"}
             ],
-            model="llama2-70b-4096",
+            model="llama3-70b-8192",
             temperature=0.7,
             max_tokens=100
         )
