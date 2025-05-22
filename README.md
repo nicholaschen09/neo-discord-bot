@@ -1,53 +1,57 @@
-# Discord Unread Messages Summarizer Bot
+# Discord Unread Message Summarizer Bot - Neo
 
-This Discord bot helps you keep track of and summarize unread messages in your Discord channels.
+This is a Discord bot that tracks unread messages in each channel and can summarize them using the Groq API (LLM inference, OpenAI-compatible). It also supports clearing unread messages per channel.
 
 ## Features
-
-- Tracks messages in channels where the bot is present
-- Provides summaries of unread messages from the last 24 hours
-- Allows clearing of tracked messages
-- Handles long messages by splitting them into chunks
+- Tracks unread messages per channel
+- `!summarize` command: Summarizes the last 24 hours of unread messages using Groq LLMs
+- `!clear` command: Clears unread messages for the current channel
 
 ## Setup
 
-1. Clone this repository
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. Create a `.env` file in the root directory with your Discord bot token:
-   ```
-   DISCORD_TOKEN=your_discord_bot_token_here
-   ```
-4. Run the bot:
-   ```bash
-   python bot.py
-   ```
+### 1. Clone the repository
+```sh
+git clone <your-repo-url>
+cd discord-bot-unread-msgs
+```
 
-## Commands
+### 2. Create and activate a virtual environment
+```sh
+python3 -m venv venv
+source venv/bin/activate
+```
 
-- `!summarize` - Shows a summary of unread messages in the current channel from the last 24 hours
-- `!clear` - Clears the tracked unread messages for the current channel
+### 3. Install dependencies
+```sh
+pip install -r requirements.txt
+```
 
-## Getting a Discord Bot Token
+### 4. Set up environment variables
+Create a `.env` file in the project root with the following content:
+```
+DISCORD_TOKEN=your_discord_bot_token
+GROQ_API_KEY=your_groq_api_key
+```
+- Get your Discord bot token from the [Discord Developer Portal](https://discord.com/developers/applications)
+- Get your Groq API key from the [Groq Console](https://console.groq.com/)
 
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click "New Application" and give it a name
-3. Go to the "Bot" section and click "Add Bot"
-4. Under the bot section, enable the following Privileged Gateway Intents:
-   - MESSAGE CONTENT INTENT
-   - SERVER MEMBERS INTENT
-5. Copy the bot token and add it to your `.env` file
+### 5. Run the bot
+```sh
+python3 bot.py
+```
 
-## Inviting the Bot to Your Server
+## Usage
+- Invite the bot to your server.
+- Use `!summarize` in any channel to get a summary of the last 24 hours of unread messages.
+- Use `!clear` to clear the unread message buffer for the current channel.
 
-1. Go to OAuth2 > URL Generator in the Developer Portal
-2. Select the following scopes:
-   - bot
-   - applications.commands
-3. Select the following bot permissions:
-   - Read Messages/View Channels
-   - Send Messages
-   - Read Message History
-4. Use the generated URL to invite the bot to your server 
+## Groq API Integration
+- The bot uses the `llama3-70b-8192` model by default. You can change the model in `bot.py` if needed.
+- For more info on available models and API usage, see the [Groq API documentation](https://console.groq.com/docs/overview).
+
+## Troubleshooting
+- If you see a model not found error, make sure the model name in your code matches one available to your Groq account.
+- Always restart the bot after making changes to the code or `.env` file.
+
+## License
+MIT 
