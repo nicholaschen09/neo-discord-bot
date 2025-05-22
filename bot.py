@@ -100,7 +100,7 @@ async def summarize(ctx):
                 {"role": "system", "content": "You are a helpful assistant that summarizes Discord conversations concisely. Focus on key topics and decisions."},
                 {"role": "user", "content": f"Please summarize the following Discord conversation:\n\n{conversation_history}"}
             ],
-            model="llama2-70b-4096",  # Using the recommended model from Groq docs
+            model="llama3-70b-8192",  # Using the recommended model from Groq docs
             temperature=0.7,
             max_tokens=500
         )
