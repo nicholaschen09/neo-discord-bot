@@ -1,3 +1,5 @@
+import sys
+print(sys.path)
 import os
 import discord
 from discord.ext import commands
@@ -26,6 +28,20 @@ unread_messages = {}
 async def on_ready():
     """Confirms the bot has connected to Discord."""
     print(f'{bot.user} has connected to Discord!')
+    # Test Groq connection
+    try:
+        chat_completion = groq_client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": "Hello!"}
+            ],
+            model="llama2-70b-4096",
+            temperature=0.7,
+            max_tokens=100
+        )
+        print("Groq API connection successful!")
+    except Exception as e:
+        print(f"Error connecting to Groq API: {e}")
 
 @bot.event
 async def on_message(message):
@@ -73,7 +89,6 @@ async def summarize(ctx):
     # Format messages for the Groq API
     conversation_history = ""
     for msg in recent_messages:
-        # Using a consistent UTC timestamp format for clarity in the prompt
         conversation_history += f"**{msg['author']}** ({msg['timestamp'].strftime('%Y-%m-%d %H:%M:%S UTC')}): {msg['content']}\n"
 
     try:
@@ -85,9 +100,9 @@ async def summarize(ctx):
                 {"role": "system", "content": "You are a helpful assistant that summarizes Discord conversations concisely. Focus on key topics and decisions."},
                 {"role": "user", "content": f"Please summarize the following Discord conversation:\n\n{conversation_history}"}
             ],
-            model="llama3-8b-8192", # Or "mixtral-8x7b-32768" or "llama3-70b-8192" based on your preference and Groq's offerings
-            temperature=0.7, # Adjust creativity, 0.0 for more factual, 1.0 for more creative
-            max_tokens=500, # Max length of the summary
+            model="llama2-70b-4096",  # Using the recommended model from Groq docs
+            temperature=0.7,
+            max_tokens=500
         )
         
         ai_summary = chat_completion.choices[0].message.content
@@ -97,14 +112,13 @@ async def summarize(ctx):
 
         # Send the AI-generated summary, splitting if too long for Discord
         if len(ai_summary) > 2000:
-            # Discord message limit is 2000 characters. Leave room for title.
             chunks = [ai_summary[i:i+1900] for i in range(0, len(ai_summary), 1900)]
             for chunk in chunks:
                 await ctx.send(f"**AI Summary (continued):**\n{chunk}")
         else:
             await ctx.send(f"**AI Summary (Last 24 Hours):**\n\n{ai_summary}")
 
-    except Exception as e: # Catching a broad exception for demonstration
+    except Exception as e:
         print(f"An error occurred during Groq API call: {e}")
         await ctx.send(f"An error occurred while trying to summarize: {e}")
 
