@@ -2,8 +2,8 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from datetime import datetime, timedelta, timezone # Ensure timezone is imported
-from groq import Groq # Import Groq client
+from datetime import datetime, timedelta, timezone 
+from groq import Groq 
 
 # Load environment variables
 load_dotenv()
